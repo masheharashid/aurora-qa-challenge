@@ -6,7 +6,7 @@ A natural language question-answering system that answers questions about member
 - [Live Demo](#live-demo)
 - [Architecture](#architecture)
 - [How It Works](#how-it-works)
-- [Project Structure](#file-structure)
+- [Project Structure](#project-structure)
 - [Deployment](#deployment)
 - [Dependencies](#dependencies)
 - [Bonus Goals](#bonus-goals)
@@ -90,15 +90,15 @@ python app.py
 
 The API will be available at `http://localhost:8080`
 
-### Hugging Face Space Deployment 
+### HuggingFace Space Deployment 
 
 1. Go to [https://huggingface.co/spaces](https://huggingface.co/spaces)
-2. Click **"Create new Space"** button and fill out the form
+2. Click the **"Create new Space"** button and fill out the form
 3. Click **"Create Space"**
 4. Upload files directly or add HuggingFace as a remote and push
    - Make sure the application port is set to the right value (default: 7860 for HF, 8080 for local)
 6. Click **"Commit changes to main"** or run the command ```git push hf master:main```
-7. In your Space, click **"Settings"** tab
+7. In your Space, click the **"Settings"** tab
 8. Scroll to **"Variables and secrets"**
 9. Click **"New secret"** to add LLM API key
 10. Add:
@@ -116,3 +116,27 @@ See `requirements.txt` for the full list. Key dependencies:
 - `faiss-cpu` - Vector similarity search
 - `dateparser` - Date parsing and normalization
 - `requests` - HTTP client for LLM API calls
+
+## Bonus Goals
+
+### Bonus 1: Design Notes
+
+When building this question-answering system, I evaluated two different architectural approaches before settling on the final design. Here are the two alternatives I considered. 
+
+#### Approach 1: **Pure LLM-based System** 
+
+I considered sending each question directly to an LLM (like GPT-4 or Claude) with the entire message dataset included in the context window. The reasons I considered this approach are that it would be the simplest to implement, as it was just API calls and no machine learning infrastructure. LLMs also excel in understanding natural language nuances, so they could handle complex, multi-part questions naturally. 
+
+I didn't choose this approach for the following reasons:
+- **Cost concerns**: Sending 90+ messages in context for every query would be expensive at scale
+- **Latency issues**: Processing large contexts is slow (about 3-5+ seconds per query)
+- **Token limits**: Current dataset fits, but wouldn't scale beyond ~500-1000 messages
+
+#### Approach 2: **Fine-Tuned Question-Answering Model** 
+
+I considered fine-tuning a model like BERT, RoBERTa, or T5 specifically on member message data to create a custom QA system. The reasons I considered this approach are that there were no external API dependencies, so there are cost savings in the long term. Also, it would provide the best possible accuracy for this specific domain due having complete control over the model. 
+
+I didn't choose this approach for the following reasons:
+- **Time constraints**: Fine-tuning requires significant experimentation and iteration
+- **Maintenance burden**: Model needs retraining whenever message patterns change
+- **No training data**: Would need hundreds of labeled question-answer pairs
