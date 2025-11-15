@@ -13,8 +13,8 @@ venv/
 .venv
 
 # Data
-*.bin
-metadata.json
+# *.bin
+# metadata.json
 api_messages.json
 
 # IDE
