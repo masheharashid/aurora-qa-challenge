@@ -289,4 +289,8 @@ def root():
     }
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=8080, reload=True)
+    #uvicorn.run("app:app", host="0.0.0.0", port=8080, reload=True)
+
+    # For Hugging Face Deployment 
+    port = int(os.getenv("PORT", 7860))  # Changed from 8080 to 7860
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=False)
