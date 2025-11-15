@@ -10,7 +10,6 @@ A natural language question-answering system that answers questions about member
 - [Deployment](#deployment)
 - [Dependencies](#dependencies)
 - [Bonus Goals](#bonus-goals)
-- [
 
 ## Live Demo
 **API Endpoint:** [https://masheharashid-aurora-qa-challenge.hf.space/docs](https://masheharashid-aurora-qa-challenge.hf.space/docs)
