@@ -13,6 +13,8 @@ A natural language question-answering system that answers questions about member
 
 ## Live Demo
 **API Endpoint:** [https://masheharashid-aurora-qa-challenge.hf.space/docs](https://masheharashid-aurora-qa-challenge.hf.space/docs)
+
+**Try a sample question**: [https://masheharashid-aurora-qa-challenge.hf.space/ask?q=What is Vikram's office address?](https://masheharashid-aurora-qa-challenge.hf.space/ask?q=What%20is%20Vikram%27s%20office%20address?)
   
 ## Architecture
 
