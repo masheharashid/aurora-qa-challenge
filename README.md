@@ -49,8 +49,9 @@ aurora-qa-challenge/
 ├── app.py                    # Main FastAPI application
 ├── create_index.py           # Script to build FAISS index
 ├── extract_responses.py      # Script to extract API responses
+├── data_analysis.py          # Script to analyze data for bonus goal
 ├── requirements.txt          # Python dependencies
-├── Dockerfile                # Docker configuration for HuggingFace Deployment
+├── Dockerfile                # Docker configuration for HuggingFace deployment
 ├── faiss_index.bin           # Pre-built FAISS index
 └── metadata.json             # Message metadata
 ```
@@ -147,7 +148,7 @@ I didn't choose this approach for the following reasons:
 
 ### Bonus 2: Data Insights
 
-I performed a comprehensive analysis of the member message dataset to identify patterns, anomalies, and inconsistencies that could impact the QA system's performance. The dataset is functional but has quality issues typical of real-world data: encoding problems (6%), name format inconsistencies, and unbalanced distribution (3x variation in user activity).
+I performed a comprehensive analysis of the member message dataset (using `data_analysis.py`) to identify patterns, anomalies, and inconsistencies that could impact the QA system's performance. The dataset is functional but has quality issues typical of real-world data: encoding problems (6%), name format inconsistencies, and unbalanced distribution (3x variation in user activity).
 
 #### Member Data Overview
 
