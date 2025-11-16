@@ -142,3 +142,71 @@ I didn't choose this approach for the following reasons:
 - **Time constraints**: Fine-tuning requires significant experimentation and iteration
 - **Maintenance burden**: Model needs retraining whenever message patterns change
 - **No training data**: Would need hundreds of labeled question-answer pairs
+
+---
+
+### Bonus 2: Data Insights
+
+I performed a comprehensive analysis of the member message dataset to identify patterns, anomalies, and inconsistencies that could impact the QA system's performance. The dataset is functional but has quality issues typical of real-world data: encoding problems (6%), name format inconsistencies, and unbalanced distribution (3x variation in user activity).
+
+#### Member Data Overview
+
+- **Total Messages**: 100 messages
+- **Total Users**: 10 unique members
+- **Date Range**: November 14, 2024 - November 4, 2025 (nearly 1 year)
+- **Average Messages per User**: 10 messages
+
+#### Key Insights
+
+1. **Character Encoding Problems**
+   - 6 messages (6%) contain corrupted characters due to encoding issues
+   - Common corruptions: `â€™` (should be apostrophe `'`), `â€"` (should be em dash `—`)
+     - **Examples:**
+       - `"Iâ€™d like a table"` → Should be `"I'd like a table"`
+       - `"for tomorrowâ€™s airport"` → Should be `"for tomorrow's airport"`
+     - UTF-8 encoding not properly handled when ingesting data from source API
+
+2. **Name Format Inconsistencies**
+     - Mixed name formats: "Sophia Al-Farsi", "Hans Müller" (with umlaut), "Layla Kawaguchi"
+     - Some names have special characters that could cause matching issues
+
+3. **Date & Time Information Variations**
+   - **Date Mentions:**
+     - **Absolute dates** (e.g., "November 15"): 7 messages (7%)
+     -  **Relative dates** (e.g., "this Friday", "tomorrow"): 11 messages (11%)
+     -   **Total messages with dates**: 18 messages (18%)
+   - **Date Format:**
+     - "November 15" (month name + day)
+     - "this Friday" (relative to message timestamp)
+     - "first week of December" (week-based references)
+     - "tomorrow", "tonight" (simple relatives)
+
+4. **Message Distribution** 
+
+    | User | Messages | Percentage |
+    |------|----------|------------|
+    | Sophia Al-Farsi | 16 | 16% |
+    | Fatima El-Tahir | 15 | 15% |
+    | Hans Müller | 11 | 11% |
+    | Layla Kawaguchi | 10 | 10% |
+    | Vikram Desai | 10 | 10% |
+    | Lily O'Sullivan | 10 | 10% |
+    | Armand Dupont | 8 | 8% |
+    | Thiago Monteiro | 8 | 8% |
+    | Lorenzo Cavalli | 7 | 7% |
+    | Amina Van Den Berg | 5 | 5% |
+
+    -  3x variation between most active (16) and least active (5) users
+    -  Therefore, questions about Sophia will have more context and likely better answers than questions about Amina
+
+5. **Topic Distribution**
+
+    | Topic | Messages | Percentage |
+    |-------|----------|------------|
+    | Travel/Bookings | 29 | 29% |
+    | Customer Service | 18 | 18% |
+    | Account Updates | 15 | 15% |
+    | Restaurant Reservations | 13 | 13% |
+    | Other | 25 | 25% |
+
+   - Travel is the dominant topic (almost 1/3 of messages), followed by general service requests
